@@ -31,7 +31,7 @@ const RegistrationForm = () => {
     const validationErrors = validate();
     if (Object.keys(validationErrors).length === 0) {
       console.log('Form submitted:', formData);
-    
+      
     } else {
       setErrors(validationErrors);
     }
