@@ -1,76 +1,62 @@
-
-import React, { useState } from 'react';
+import React, { useState } from "react";
 
 const RegistrationForm = () => {
-  const [formData, setFormData] = useState({
-    username: '',
-    email: '',
-    password: ''
-  });
-
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [errors, setErrors] = useState({});
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: value
-    }));
-  };
-
-  const validate = () => {
-    const newErrors = {};
-    if (!formData.username) newErrors.username = 'Username is required';
-    if (!formData.email) newErrors.email = 'Email is required';
-    if (!formData.password) newErrors.password = 'Password is required';
-    return newErrors;
-  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const validationErrors = validate();
-    if (Object.keys(validationErrors).length === 0) {
-      console.log('Form submitted:', formData);
-      
+    const newErrors = {};
+
+    if (!username) newErrors.username = "Username is required";
+    if (!email) newErrors.email = "Email is required";
+    if (!password) newErrors.password = "Password is required";
+
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
     } else {
-      setErrors(validationErrors);
+      alert("Form submitted");
+      setUsername("");
+      setEmail("");
+      setPassword("");
+      setErrors({});
     }
   };
 
   return (
     <form onSubmit={handleSubmit}>
+      <h2>Controlled Form</h2>
       <div>
         <label htmlFor="username">Username:</label>
         <input
           type="text"
           id="username"
-          name="username"
-          value={formData.username}  {/* Binding state to the input */}
-          onChange={handleChange}
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
         />
-        {errors.username && <p>{errors.username}</p>}
+        {errors.username && <div>{errors.username}</div>}
       </div>
       <div>
         <label htmlFor="email">Email:</label>
         <input
           type="email"
           id="email"
-          name="email"
-          value={formData.email}  {/* Binding state to the input */}
-          onChange={handleChange}
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
         />
-        {errors.email && <p>{errors.email}</p>}
+        {errors.email && <div>{errors.email}</div>}
       </div>
       <div>
         <label htmlFor="password">Password:</label>
         <input
           type="password"
           id="password"
-          name="password"
-          value={formData.password}  {/* Binding state to the input */}
-          onChange={handleChange}
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
         />
-        {errors.password && <p>{errors.password}</p>}
+        {errors.password && <div>{errors.password}</div>}
       </div>
       <button type="submit">Register</button>
     </form>
