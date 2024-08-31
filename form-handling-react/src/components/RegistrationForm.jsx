@@ -31,7 +31,7 @@ const RegistrationForm = () => {
     const validationErrors = validate();
     if (Object.keys(validationErrors).length === 0) {
       console.log('Form submitted:', formData);
-      // You can use an API here to submit the data
+    
     } else {
       setErrors(validationErrors);
     }
@@ -45,7 +45,7 @@ const RegistrationForm = () => {
           type="text"
           id="username"
           name="username"
-          value={formData.username}
+          value={formData.username}  {/* Binding state to the input */}
           onChange={handleChange}
         />
         {errors.username && <p>{errors.username}</p>}
@@ -56,7 +56,7 @@ const RegistrationForm = () => {
           type="email"
           id="email"
           name="email"
-          value={formData.email}
+          value={formData.email}  {/* Binding state to the input */}
           onChange={handleChange}
         />
         {errors.email && <p>{errors.email}</p>}
@@ -67,7 +67,7 @@ const RegistrationForm = () => {
           type="password"
           id="password"
           name="password"
-          value={formData.password}
+          value={formData.password}  {/* Binding state to the input */}
           onChange={handleChange}
         />
         {errors.password && <p>{errors.password}</p>}
