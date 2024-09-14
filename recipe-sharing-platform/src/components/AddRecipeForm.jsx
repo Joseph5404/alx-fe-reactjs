@@ -4,20 +4,27 @@ function AddRecipeForm() {
   const [title, setTitle] = useState('');
   const [ingredients, setIngredients] = useState('');
   const [steps, setSteps] = useState('');
-  const [instructions, setInstructions] = useState('');
-  const [error, setError] = useState('');
+  const [errors, setErrors] = useState({});
+
+  const validate = () => {
+    const errors = {};
+    if (!title) errors.title = 'Recipe title is required';
+    if (!ingredients) errors.ingredients = 'Ingredients are required';
+    if (!steps) errors.steps = 'Preparation steps are required';
+    return errors;
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // Validation check
-    if (!title || !ingredients || !steps) {
-      setError('All fields are required!');
+    const validationErrors = validate();
+    if (Object.keys(validationErrors).length > 0) {
+      setErrors(validationErrors);
       return;
     }
 
-    // Clear error
-    setError('');
+    // Clear errors
+    setErrors({});
 
     // Mock submit logic
     const newRecipe = {
@@ -38,7 +45,14 @@ function AddRecipeForm() {
     <div className="max-w-lg mx-auto p-6 bg-white shadow-md rounded-lg">
       <h1 className="text-2xl font-bold mb-6 text-center">Add New Recipe</h1>
 
-      {error && <p className="text-red-500 mb-4">{error}</p>}
+      {/* Display errors */}
+      {Object.values(errors).length > 0 && (
+        <div className="mb-4">
+          {Object.entries(errors).map(([key, message]) => (
+            <p key={key} className="text-red-500 mb-2">{message}</p>
+          ))}
+        </div>
+      )}
 
       <form onSubmit={handleSubmit}>
         <div className="mb-4">
@@ -50,7 +64,7 @@ function AddRecipeForm() {
             type="text"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
-            className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className={`w-full p-2 border ${errors.title ? 'border-red-500' : 'border-gray-300'} rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500`}
             placeholder="Enter recipe title"
           />
         </div>
@@ -63,7 +77,7 @@ function AddRecipeForm() {
             id="ingredients"
             value={ingredients}
             onChange={(e) => setIngredients(e.target.value)}
-            className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className={`w-full p-2 border ${errors.ingredients ? 'border-red-500' : 'border-gray-300'} rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500`}
             placeholder="List ingredients, each on a new line"
             rows="4"
           />
@@ -77,7 +91,7 @@ function AddRecipeForm() {
             id="steps"
             value={steps}
             onChange={(e) => setSteps(e.target.value)}
-            className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className={`w-full p-2 border ${errors.steps ? 'border-red-500' : 'border-gray-300'} rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500`}
             placeholder="List preparation steps, each on a new line"
             rows="4"
           />
