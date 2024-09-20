@@ -1,4 +1,3 @@
-// src/components/Search.jsx
 import React, { useState } from 'react';
 
 const Search = ({ onSearch }) => {
@@ -8,6 +7,7 @@ const Search = ({ onSearch }) => {
     e.preventDefault();
     if (query.trim()) {
       onSearch(query);
+      setQuery(''); // Clear input after submission
     }
   };
 

@@ -1,4 +1,4 @@
-// src/App.jsx
+
 import React, { useState } from 'react';
 import Search from './components/Search';
 import { fetchUserData } from './services/githubService';
@@ -29,9 +29,8 @@ function App() {
       <Search onSearch={handleSearch} />
 
       {loading && <p>Loading...</p>}
-
       {error && <p>Looks like we can't find the user</p>}
-
+      
       {userData && (
         <div>
           <img src={userData.avatar_url} alt={userData.login} width="150" />
