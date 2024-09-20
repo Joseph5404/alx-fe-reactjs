@@ -11,16 +11,16 @@ const Search = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    setError(false);
-    setUserData(null);
+    setError(false);  // Reset error before the search
+    setUserData(null); // Clear previous user data
 
     try {
       const data = await fetchUserData(query);
-      setUserData(data);
+      setUserData(data);  // Set the fetched data
     } catch (err) {
-      setError(true);  // Set error state if the user is not found or an API error occurs
+      setError(true);     // Set error state if something goes wrong
     } finally {
-      setLoading(false);
+      setLoading(false);  // Stop loading regardless of success or failure
     }
   };
 
@@ -36,13 +36,11 @@ const Search = () => {
         <button type="submit">Search</button>
       </form>
 
-      {/* Display loading message */}
+      {/* Conditional rendering based on loading and error states */}
       {loading && <p>Loading...</p>}
-
-      {/* Display error message if the user isn't found */}
       {error && <p>Looks like we can't find the user</p>}
 
-      {/* Display user information if fetched successfully */}
+      {/* Display the fetched user data if available */}
       {userData && (
         <div>
           <img src={userData.avatar_url} alt={userData.login} width="150" />
