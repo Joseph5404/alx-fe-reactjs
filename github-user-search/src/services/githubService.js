@@ -1,11 +1,33 @@
-// src/services/githubService.js
-import axios from 'axios';
+import axios, { Axios } from "axios"
 
-export const fetchUserData = async (username) => {
-  try {
-    const response = await axios.get(`https://api.github.com/users/${username}`);
-    return response.data; // Return user data if successful
-  } catch (err) {
-    throw new Error('User not found'); // Throw an error if user is not found
-  }
-};
+const fetchUserData = async({username, location , minRepos}) => {
+    let query ='';
+    if (username ){
+        query += `${username} in:login`
+    }
+
+    if(location){
+        query += `location: ${location}`
+    }
+    if (repository) {
+        query += `respos:>= ${minRepos}`
+    }
+    if (!query){
+        throw new ErrorEvent('At least one search criterion must be provided.')
+    }
+    try{
+        // const url = `https://api.github.com/users/${username}`;
+        const url = "https://api.github.com/search/users?q"
+        const response = await axios.get(`${SEARCH_API_URL}?q=${encodeURIComponent(query)}`);
+        
+        // const response = await axios.get(url);
+        
+
+        return response.data;
+    }catch(error){
+        console.error ("Error fetching user data:", error);
+    }throw error;
+
+}
+
+export default fetchUserData;
