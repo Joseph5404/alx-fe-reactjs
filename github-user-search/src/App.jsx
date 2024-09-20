@@ -1,14 +1,14 @@
-// src/App.jsx
-import React from 'react';
-import Search from './components/Search';
+import './App.css'
+import Search from './components/Search'
 
 function App() {
+
   return (
-    <div className="App">
-      <h1>GitHub User Search</h1>
-      <Search />
+    <div className='min-h-screen bg-gray-100'>
+       <Search/>
+     
     </div>
-  );
+  )
 }
 
-export default App;
+export default App
