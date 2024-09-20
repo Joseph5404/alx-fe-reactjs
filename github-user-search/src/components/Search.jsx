@@ -18,7 +18,7 @@ const Search = () => {
       const data = await fetchUserData(query);
       setUserData(data);
     } catch (err) {
-      setError(true);
+      setError(true);  // Set error state if the user is not found or an API error occurs
     } finally {
       setLoading(false);
     }
@@ -36,9 +36,13 @@ const Search = () => {
         <button type="submit">Search</button>
       </form>
 
+      {/* Display loading message */}
       {loading && <p>Loading...</p>}
+
+      {/* Display error message if the user isn't found */}
       {error && <p>Looks like we can't find the user</p>}
-      
+
+      {/* Display user information if fetched successfully */}
       {userData && (
         <div>
           <img src={userData.avatar_url} alt={userData.login} width="150" />
